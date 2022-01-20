@@ -1,11 +1,20 @@
-# Deft for Emacs [![MELPA badge][melpa-badge]][melpa-link] [![MELPA stable badge][melpa-stable-badge]][melpa-stable-link] [![Travis CI Build Status][travis-badge]][travis-link]
+# About
 
-  [melpa-link]: https://melpa.org/#/deft
-  [melpa-stable-link]: https://stable.melpa.org/#/deft
-  [melpa-badge]: https://melpa.org/packages/deft-badge.svg
-  [melpa-stable-badge]: https://stable.melpa.org/packages/deft-badge.svg
-  [travis-link]: https://travis-ci.org/jrblevin/deft
-  [travis-badge]: https://travis-ci.org/jrblevin/deft.svg?branch=master
+This fork of the excellent [deft](https://github.com/jrblevin/deft) package from Jason Blevins simply
+modifies the appearance of the deft file listing, making it resemble the
+“recent posts” section of a blog. In such a listing, the timestamp
+appears first, followed by the title, and then an excerpt of post or
+contents of the file. To make the excerpt useful, this fork makes some
+minor modifications to the summary-generation code to strip line breaks,
+redundant white space, and text that most likely will not be useful in a
+summary (e.g., code listings and bibtex blocks). For best results,
+combine these changes with a good theme (such as those from [Nicolas
+Rougier](https://github.com/rougier)) and also enable `buffer-face-mode` for the deft listing buffer.
+
+![deft (dark theme)](./deft-dark.png "Deft (dark theme)")
+![deft (light theme)](./deft-light.png "Deft (light theme)")
+
+# Deft for Emacs
 
 <!-- Automatically generated from comments in deft.el. -->
 
