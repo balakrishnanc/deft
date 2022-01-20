@@ -766,6 +766,11 @@ set to nil, there is no limit."
   :group 'deft
   :package-version '(deft . "0.9"))
 
+(defcustom deft-summary-width 300
+  "Length of summary text (in characters)."
+  :type 'integer
+  :group 'deft)
+
 ;; Faces
 
 (defgroup deft-faces nil
