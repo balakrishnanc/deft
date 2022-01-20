@@ -1094,6 +1094,41 @@ used as title."
           (funcall deft-parse-title-function
                    (substring contents begin (match-end 0)))))))
 
+(defun deft-strip-irrelevant (contents)
+  "Remove text from `contents' that is irrelevant for generating a summary."
+  (let ((needless-regexp (concat "\\("
+                                 "^#\\+[[:upper:]_]+:.*$" ;; org-mode metadata
+                                 "\\|^* .*$"              ;; Headings
+                                 "\\|^=.*=$"              ;; Headings/titles
+                                 "\\|^|.*$"               ;; org-tables
+                                 "\\|^[[:space:]]+$"      ;; blank lines
+                                 "\\)"))
+        (case-fold-search nil))
+    (replace-regexp-in-string needless-regexp "" contents)))
+
+(defun deft-strip-ver-blocks (summary)
+  "Remove verbatim blocks such as bibtex or source code from summary text.
+This function expects that the summary is a long piece of text _without_ any line breaks."
+  (let ((case-fold-search nil))
+    (replace-regexp-in-string
+     "#\\+begin_[[:alpha:]]+.*#\\+end_[[:alpha:]]+"
+     ""
+     summary)))
+
+(defun deft-squeeze-space (summary)
+  "Squeeze redundant whitespace."
+  (replace-regexp-in-string
+   "[[:space:]][[:space:]]+"
+   " "
+   summary))
+
+(defun deft-join-contents (summary)
+  "Remove newlines and tabs and return contents as a single long string."
+  (replace-regexp-in-string
+   "[\n\t]"
+   " "
+   summary))
+
 (defun deft-parse-summary (contents title)
   "Parse the file CONTENTS, given the TITLE, and extract a summary.
 The summary is a string extracted from the contents following the
