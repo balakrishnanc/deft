@@ -1317,28 +1317,32 @@ handles nil values gracefully."
            (summary (deft-file-summary file))
            (mtime (when deft-time-format
                     (format-time-string deft-time-format (deft-file-mtime file))))
-           (mtime-width (deft-string-width mtime))
-           (line-width (- deft-window-width mtime-width))
-           (title-width (min line-width (deft-string-width full-title)))
+           (title-width deft-window-width)
            (title (if full-title
                       (truncate-string-to-width full-title title-width)
                     deft-empty-file-title))
            (summary-width (min (deft-string-width summary)
-                               (- line-width
-                                  title-width
-                                  (length deft-separator)))))
+                               deft-summary-width)))
+      (when mtime
+        (insert-text-button (propertize mtime 'face 'deft-time-face)
+                            'type 'deft-button
+                            'tag file)
+        (insert "\n"))
       (insert-text-button title
                           'type 'deft-button
                           'tag file)
+      (insert "\n")
       (when (> summary-width 0)
-        (insert (propertize deft-separator 'face 'deft-separator-face))
-        (insert (propertize (truncate-string-to-width summary summary-width)
-                            'face 'deft-summary-face)))
-      (when mtime
-        (while (< (current-column) line-width)
-          (insert " "))
-        (insert (propertize mtime 'face 'deft-time-face)))
-      (insert "\n"))))
+        (insert-text-button (propertize (truncate-string-to-width
+                                         summary
+                                         summary-width
+                                         nil
+                                         ?\s
+                                         t)
+                                        'face 'deft-summary-face)
+                            'type 'deft-button
+                            'tag file))
+      (insert "\n\n"))))
 
 (defun deft-open-button (button)
   "Open the file tagged by BUTTON.
