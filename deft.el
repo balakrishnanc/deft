@@ -681,14 +681,17 @@ form -*-mode-*-."
 
 (defcustom deft-strip-summary-regexp
   (concat "\\("
-           "[\n\t]" ;; blank
-           "\\|^#\\+[[:upper:]_]+:.*$" ;; org-mode metadata
-           "\\)")
-   "Regular expression to remove file contents displayed in summary.
-Presently removes blank lines and `org-mode' metadata statements."
-   :type 'regexp
-   :safe 'stringp
-   :group 'deft)
+          "[\n\t]" ;; blank
+          "\\|^#\\+[[:upper:]_]+:.*$" ;; org-mode metadata
+          "\\)")
+  "Regular expression to remove file contents displayed in summary.
+The summary text used as match input for this regular expression _will_
+be one long string without line terminator or carriage return and with
+most of the `special' markup such as org-mode metadata or titles or code
+or latex blocks removed."
+  :type 'regexp
+  :safe 'stringp
+  :group 'deft)
 
 (defcustom deft-archive-directory "archive/"
   "Deft archive directory.
@@ -1133,8 +1136,13 @@ This function expects that the summary is a long piece of text _without_ any lin
   "Parse the file CONTENTS, given the TITLE, and extract a summary.
 The summary is a string extracted from the contents following the
 title."
-  (let ((summary (let ((case-fold-search nil))
-                   (replace-regexp-in-string deft-strip-summary-regexp " " contents))))
+  (let ((summary (replace-regexp-in-string
+                   deft-strip-summary-regexp
+                   ""
+                   (deft-squeeze-space
+                     (deft-strip-ver-blocks
+                       (deft-join-contents
+                         (deft-strip-irrelevant contents)))))))
     (deft-chomp
       (if (and title
                (not deft-use-filename-as-title)
