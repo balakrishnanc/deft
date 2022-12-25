@@ -1499,7 +1499,7 @@ the newly created FILE."
              (string-equal deft-default-extension "org"))
         "#+TITLE: "))
       (deft-whole-filter-regexp)
-      "\n\n")
+      "\n")
      nil file nil)))
 
 (defun deft-new-file-named (slug)
