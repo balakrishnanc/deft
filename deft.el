@@ -1256,7 +1256,7 @@ the variable `deft-file-limit'."
                          'deft-filter-string-error-face
                        'deft-filter-string-face))))
     (insert (propertize "Deft" 'face 'deft-header-face)))
-  (insert "\n\n"))
+  (insert "\n"))
 
 (defun deft-current-window-width ()
   "Return current width of window displaying `deft-buffer'.
