@@ -1206,7 +1206,7 @@ the variable `deft-file-limit'."
                        'deft-filter-string-face))))
     (widget-insert
          (propertize "Deft" 'face 'deft-header-face)))
-  (widget-insert "\n\n"))
+  (widget-insert "\n"))
 
 (defun deft-current-window-width ()
   "Return current width of window displaying `deft-buffer'.
